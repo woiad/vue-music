@@ -87,7 +87,6 @@ export default {
       this.slider.on('scrollEnd', () => {
         const pageIndex = this.slider.getCurrentPage().pageX
         this.currentPageIndex = pageIndex
-        console.log(pageIndex)
         if (this.autoPlay) {
           clearTimeout(this.timer)
           this._play()
@@ -99,6 +98,9 @@ export default {
     },
     _play() {
       let pageIndex = this.currentPageIndex + 1
+      if (pageIndex === this.children.length - 2) { // children 有七个，前后各一个
+        pageIndex = 0
+      }
       this.timer = setTimeout(() => {
         this.slider.goToPage(pageIndex, 0, 400)
       }, this.interval)
