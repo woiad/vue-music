@@ -1,6 +1,7 @@
 <template>
   <div class="singer">
-    <list-view :data="singers"></list-view>
+    <list-view :data="singers" @select="  "></list-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -26,6 +27,9 @@ export default {
     this._getSingerList()
   },
   methods: {
+    selectSinger(singer) {
+      this.$router.push({ path: `/singer/${singer.id}` })
+    },
     _getSingerList() {
       getSingerList().then(res => {
         if (res.code === ERR_OK) {
@@ -46,7 +50,7 @@ export default {
           map.hot.items.push(new Singer(item.Fsinger_mid, item.Fsinger_name))
         }
         const key = item.Findex
-        if (!item[key]) {
+        if (!map[key]) {
           map[key] = {
             title: key,
             items: []
@@ -54,7 +58,7 @@ export default {
         }
         map[key].items.push(new Singer(item.Fsinger_mid, item.Fsinger_name))
       })
-      // 为了的发哦有序列表, 需要处理 map
+      // 为了有序列表, 需要处理 map
       let hot = []
       let ret = []
       for (let key in map) {

@@ -12,7 +12,7 @@ export function hasClass(el, className) {
   return reg.test(el.className)
 }
 
-export function getData(el, name, val) {
+export function getData(el, name, val) { // val ? 设置属性 : 获取属性
   const prefix = 'data-'
   name = prefix + name
   if (val) {
