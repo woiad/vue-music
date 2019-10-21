@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <transition name="slide" mode="out-in">
     <div class="singer-detail"></div>
   </transition>
 </template>
