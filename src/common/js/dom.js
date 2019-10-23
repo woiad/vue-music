@@ -21,3 +21,35 @@ export function getData(el, name, val) { // val ? 设置属性 : 获取属性
     return el.getAttribute(name)
   }
 }
+
+let elementStyle = document.createElement('div').style
+console.log(elementStyle)
+let vendor = (() => {
+  let transformNames = {
+    webkit: 'webkitTransform',
+    Moz: 'mozTransform',
+    O: 'OTransform',
+    ms: 'msTransform',
+    standard: 'transform'
+  }
+
+  for (let key in transformNames) {
+    if (elementStyle[transformNames[key]] !== undefined) {
+      return key
+    }
+  }
+  return false
+})()
+
+export function prefixStyle(style) {
+  console.log(vendor)
+  if (vendor === false) {
+    return false
+  }
+
+  if (vendor === 'standard') {
+    return style
+  }
+
+  return vendor + style.charAt(0).toUpperCase() + style.substring(1)
+}
