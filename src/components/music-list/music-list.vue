@@ -22,7 +22,7 @@
       :listen-scroll="listenScroll"
       ref="list">
       <div class="song-list-wrapper">
-        <song-list :songs="songs"></song-list>
+        <song-list @select="selectIem" :songs="songs"></song-list>
       </div>
       <div class="loading-container" v-show="!songs.length">
         <loading></loading>
@@ -35,6 +35,7 @@
 import Scroll from 'base/scroll/scroll'
 import SongList from 'base/song-list/song-list'
 import { prefixStyle } from 'common/js/dom'
+import { mapActions } from 'vuex'
 import loading from 'base/loading/loading'
 
 const RESERVED_HEIGHT = 40 // layer偏移顶部距离
@@ -89,7 +90,16 @@ export default {
     },
     back() {
       this.$router.back()
-    }
+    },
+    selectIem(song, ind) {
+      this.selectPlay({
+        list: this.songs,
+        index: ind
+      })
+    },
+    ...mapActions([
+      'selectPlay'
+    ])
   },
   watch: {
     scrollY(newY) {
